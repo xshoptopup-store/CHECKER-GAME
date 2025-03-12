@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSTBot Game Stalk API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: #0a0f16;
+            color: #e6edf3;
+            line-height: 1.6;
+            width: 100%;
+        }
+        
+        /* Marquee styling */
+        .marquee-container {
+            background-color: #1c4b8e;
+            color: white;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+            padding-left: 100%;
+        }
+        
+        @keyframes marquee {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(-100%, 0);
+            }
+        }
+        
+        header {
+            background-color: #0a2b52;
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .card {
+            background-color: #12192a;
+            border-radius: 12px;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #253047;
+        }
+        
+        h2 {
+            color: #3a75c4;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #253047;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #3a75c4;
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .endpoint {
+            background-color: #0e1420;
+            border-left: 6px solid #1c4b8e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-family: monospace;
+            overflow-x: auto;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .base-url {
+            font-weight: bold;
+            color: #3a75c4;
+        }
+        
+        .route {
+            color: #5694dd;
+        }
+        
+        .params {
+            color: #ff7b72;
+        }
+        
+        .response-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0.8rem 0;
+        }
+        
+        pre {
+            background-color: #0a0f16;
+            color: #f0f6fc;
+            padding: 0.8rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #253047;
+            font-size: 0.8rem;
+            width: 90%;
+            max-width: 450px;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .table-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 90%;
+            max-width: 500px;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        
+        table, th, td {
+            border: 1px solid #253047;
+        }
+        
+        th, td {
+            padding: 0.6rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #0e1420;
+            font-weight: bold;
+        }
+        
+        .status-code {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .status-success {
+            background-color: #238636;
+        }
+        
+        .status-error {
+            background-color: #da3633;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 0.75rem 1.2rem;
+            background-color: #1c4b8e;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            flex: 1 1 auto;
+            min-width: 120px;
+            max-width: 100%;
+        }
+        
+        .nav-button:hover {
+            background-color: #2a5ca0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            background-color: #0a2b52;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        @media (min-width: 768px) {
+            header {
+                padding: 2rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            header p {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .card {
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            h3 {
+                font-size: 1.4rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            pre {
+                font-size: 0.85rem;
+            }
+            
+            table {
+                font-size: 0.9rem;
+            }
+            
+            .nav-button {
+                font-size: 1rem;
+                padding: 0.9rem 1.5rem;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 2rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            h3 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            pre {
+                font-size: 0.9rem;
+                max-width: 500px;
+            }
+            
+            table {
+                font-size: 1rem;
+            }
+            
+            .endpoint {
+                font-size: 1.1rem;
+            }
+            
+            .nav-button {
+                flex: 0 1 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Added marquee at the top -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            🔥 Welcome to XSTBot Game Stalk API - Cocok untuk website anda dan bot WhatsApp Anda, Menyediakan pembelian script website stalk game dan scraping stalk game untuk bot WhatsApp. 🔥
+        </div>
+    </div>
+    
+    <header>
+        <h1>XSTBot Game Stalk API</h1>
+        <p>Lookup player information for popular mobile games</p>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2>API Overview</h2>
+            <p>The XSTBot Game Stalk API allows you to retrieve player information from popular mobile games including Free Fire, Mobile Legends. The API returns player details such as username, user ID, and zone information.</p>
+            
+            <h3>Base URL</h3>
+            <div class="endpoint">
+                <span class="base-url">https://xstbot-stalkgame.vercel.app/</span>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="/" class="nav-button" target="_blank">Visit API Website</a>
+                <a href="/endpoint" class="nav-button" target="_blank">Visit Endpoint</a>
+                <a href="/sewa" class="nav-button" target="_blank">Sewa Bot WhatsApp</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Endpoints</h2>
+            
+            <h3>Free Fire</h3>
+            <div class="endpoint">
+                <span class="base-url">https://xstbot-stalkgame.vercel.app</span><span class="route">/api/game/free-fire</span><span class="params">?id=123456789</span>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>String</td>
+                        <td>Yes</td>
+                        <td>Free Fire player ID</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>Mobile Legends</h3>
+            <div class="endpoint">
+                <span class="base-url">https://xstbot-stalkgame.vercel.app</span><span class="route">/api/game/mobile-legends</span><span class="params">?id=123456789&zone=1234</span>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>String</td>
+                        <td>Yes</td>
+                        <td>Mobile Legends player ID</td>
+                    </tr>
+                    <tr>
+                        <td>zone</td>
+                        <td>String</td>
+                        <td>Yes</td>
+                        <td>Mobile Legends player zone</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Response Format</h2>
+            
+            <h3>Success Response (with Zone)</h3>
+            <div class="response-container">
+                <pre><code>{
+  "code": 200,
+  "status": "true",
+  "message": "ID berhasil ditemukan",
+  "data": {
+    "username": "XSTBot Store",
+    "user_id": "123456789",
+    "zone": "1234"
+  }
+}</code></pre>
+            </div>
+            
+            <h3>Success Response (without Zone)</h3>
+            <div class="response-container">
+                <pre><code>{
+  "code": 200,
+  "status": "true",
+  "message": "ID berhasil ditemukan",
+  "data": {
+    "username": "XSTBot Store",
+    "user_id": "123456789",
+    "zone": "null"
+  }
+}</code></pre>
+            </div>
+            
+            <h3>Failed Response</h3>
+            <div class="response-container">
+                <pre><code>{
+  "code": 404,
+  "status": "false",
+  "message": "ID tidak ditemukan"
+}</code></pre>
+            </div>
+            
+            <h3>Status Codes</h3>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Code</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="status-code status-success">200</span></td>
+                        <td>Success</td>
+                        <td>The request was successful and player information was found</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status-code status-error">404</span></td>
+                        <td>Not Found</td>
+                        <td>The player ID was not found or is invalid</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Example Usage</h2>
+            
+            <h3>Free Fire</h3>
+            <div class="endpoint">
+                <span class="base-url">https://xstbot-stalkgame.vercel.app</span><span class="route">/api/game/free-fire</span><span class="params">?id=123456789</span>
+            </div>
+            
+            <h3>Mobile Legends</h3>
+            <div class="endpoint">
+                <span class="base-url">https://xstbot-stalkgame.vercel.app</span><span class="route">/api/game/mobile-legends</span><span class="params">?id=123456789&zone=1234</span>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="https://lynk.id/xstbot-store/" class="nav-button" target="_blank">Buy Script Web Stalk Game</a>
+                <a href="/scraping" class="nav-button" target="_blank">Scraping Bot WhatsApp</a>
+                <a href="/donasi" class="nav-button" target="_blank">Donasi</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 XSTBot Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>
