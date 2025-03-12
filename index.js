@@ -17,6 +17,12 @@ app.use('/api', router);
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+app.get('/dokumentasi', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'dokumentasi.html'));
+});
+app.get('/donasi', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
+});
 
 app.get('/endpoint', (req, res) => {
    const newDataGame = dataGame.map((item) => {
