@@ -24,10 +24,10 @@ app.get('/donasi', (req, res) => {
    res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
 });
 app.get('/sewa', (req, res) => {
-   res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
+   res.sendFile(path.join(__dirname, 'public', 'sewa.html'));
 });
 app.get('/scraping', (req, res) => {
-   res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
+   res.sendFile(path.join(__dirname, 'public', 'scraping.html'));
 });
 
 app.get('/endpoint', (req, res) => {
