@@ -23,6 +23,12 @@ app.get('/dokumentasi', (req, res) => {
 app.get('/donasi', (req, res) => {
    res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
 });
+app.get('/sewa', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
+});
+app.get('/scraping', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'donasi.html'));
+});
 
 app.get('/endpoint', (req, res) => {
    const newDataGame = dataGame.map((item) => {
