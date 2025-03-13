@@ -29,6 +29,25 @@ app.get('/sewa', (req, res) => {
 app.get('/scraping', (req, res) => {
    res.sendFile(path.join(__dirname, 'public', 'scraping.html'));
 });
+app.get('/ff-region', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'ff-region.html'));
+});
+app.post('/ffstalk', async (req, res) => {
+   try {
+       const { id } = req.body;
+       if (!id) {
+           return res.status(400).json({ error: "ID tidak boleh kosong." });
+       }
+
+       const apiUrl = `https://api.vreden.my.id/api/ffstalk?id=${id}`;
+       const response = await axios.get(apiUrl);
+
+       res.status(200).json(response.data);
+   } catch (error) {
+       console.error("Error saat stalk akun FF:", error.message);
+       res.status(500).json({ error: "Gagal mengambil data Free Fire." });
+   }
+});
 
 app.get('/endpoint', (req, res) => {
    const newDataGame = dataGame.map((item) => {
