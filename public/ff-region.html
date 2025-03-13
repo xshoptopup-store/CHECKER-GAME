@@ -3,220 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Region Free Fire</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>XSTBot Stalk Region Free Fire</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #0d1b2a, #1b263b);
-            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            color: #e0e1dd;
+            height: 100vh;
+            color: #e2e8f0;
+            overflow: hidden;
         }
-        
-        .container {
-            background: rgba(21, 34, 56, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+        #particles-js {
+            position: absolute;
             width: 100%;
-            max-width: 500px;
-            text-align: center;
-            border: 1px solid #2c405c;
+            height: 100%;
+            z-index: 1;
         }
-        
-        h1 {
-            color: #e0e1dd;
-            margin-bottom: 25px;
-            font-size: 28px;
+
+        .container {
             position: relative;
-            padding-bottom: 10px;
+            z-index: 2;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
-        
-        h1::after {
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 1.5rem;
+            color: #e2e8f0;
+            position: relative;
+        }
+
+        h1:after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
+            width: 60px;
             height: 3px;
-            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-            border-radius: 10px;
+            background: #3b82f6;
+            border-radius: 2px;
         }
-        
+
         input {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid #2c405c;
+            padding: 12px;
+            border: 1px solid #334155;
+            background-color: #1e293b;
             border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-            outline: none;
-            background-color: #1b263b;
-            color: #e0e1dd;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            color: #e2e8f0;
         }
-        
+
         input:focus {
-            border-color: #3a86ff;
-            box-shadow: 0 0 10px rgba(58, 134, 255, 0.3);
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
-        
+
         input::placeholder {
-            color: #8a8d98;
+            color: #94a3b8;
         }
-        
+
         button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-            color: white;
+            padding: 12px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
+            color: white;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-bottom: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        
+
         button:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.25);
         }
-        
+
         button:active {
             transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        
+
         .loading {
+            margin-top: 15px;
             display: none;
-            margin-top: 20px;
-            font-size: 18px;
-            color: #3a86ff;
+            color: #94a3b8;
+            font-size: 14px;
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
             0% { opacity: 0.5; }
             50% { opacity: 1; }
             100% { opacity: 0.5; }
         }
-        
-        .footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #8a8d98;
-        }
-        
-        .credit {
-            font-size: 13px;
-            margin-top: 10px;
-            color: #6c7483;
-        }
-        
-        /* Result Page Styles */
-        .result-container {
-            background: #1b263b;
-            padding: 20px;
-            border-radius: 15px;
-            max-width: 700px;
-            margin: 20px auto;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-direction: column;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-            color: white;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .stat-item {
-            background: #152238;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #2c405c;
-        }
-        
-        .stat-value {
-            font-size: 20px;
-            font-weight: 600;
-            color: #4cc9f0;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            color: #8a8d98;
-        }
-        
-        /* Back button styles */
-        .back-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(90deg, #2d6cdf, #3a86ff);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            margin-top: 15px;
-        }
-        
-        .back-button:hover {
-            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-            box-shadow: 0 5px 10px rgba(58, 134, 255, 0.3);
-        }
-        
-        .back-icon {
-            margin-right: 5px;
+
+        .logo {
+            font-size: 32px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
+
     <div class="container">
-        <h1>Cek Region Free Fire</h1>
+        <div class="logo">🔎</div>
+        <h1>Cek FF Region</h1>
         <input type="text" id="ffid" placeholder="Masukkan ID Free Fire">
         <button id="checkBtn">Cek Akun</button>
         <p class="loading" id="loadingText">🔍 Sedang mencari...</p>
-        
-        <div class="footer">
-            Cek informasi akun Free Fire dengan mudah dan cepat
-        </div>
-        <div class="credit">
-            © 2025 FF Checker - Semua data hanya untuk keperluan informasi
-        </div>
     </div>
 
     <script>
@@ -230,7 +160,7 @@
             document.getElementById('loadingText').style.display = 'block';
 
             try {
-                const response = await fetch('/ffstalk', {
+                const response = await fetch('/ff-region', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: ffid })
@@ -244,315 +174,139 @@
                     let htmlContent = `
                         <html>
                         <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <title>Detail Akun Free Fire - ${data.result.account.name}</title>
-                            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+                            <title>Detail Akun Free Fire</title>
                             <style>
-                                * {
-                                    margin: 0;
-                                    padding: 0;
-                                    box-sizing: border-box;
-                                    font-family: 'Poppins', sans-serif;
-                                }
+                                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
                                 
                                 body {
-                                    background: linear-gradient(135deg, #0d1b2a, #1b263b);
-                                    color: #e0e1dd;
+                                    font-family: 'Poppins', sans-serif;
+                                    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+                                    color: #e2e8f0;
                                     padding: 20px;
+                                    margin: 0;
                                     min-height: 100vh;
                                 }
                                 
                                 .container {
-                                    background: rgba(21, 34, 56, 0.95);
-                                    padding: 30px;
-                                    border-radius: 20px;
-                                    max-width: 700px;
-                                    margin: auto;
-                                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-                                    border: 1px solid #2c405c;
-                                }
-                                
-                                .profile-header {
-                                    text-align: center;
-                                    margin-bottom: 30px;
-                                    position: relative;
+                                    background: rgba(15, 23, 42, 0.85);
+                                    padding: 25px;
+                                    border-radius: 12px;
+                                    max-width: 500px;
+                                    margin: 20px auto;
+                                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+                                    border: 1px solid rgba(59, 130, 246, 0.2);
+                                    backdrop-filter: blur(8px);
                                 }
                                 
                                 .profile-image {
-                                    width: 150px;
-                                    height: 150px;
+                                    width: 130px;
+                                    height: 130px;
                                     border-radius: 50%;
                                     object-fit: cover;
-                                    border: 5px solid #3a86ff;
-                                    margin: 0 auto 15px;
+                                    border: 4px solid #3b82f6;
+                                    margin: 0 auto 20px;
                                     display: block;
-                                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-                                }
-                                
-                                .username {
-                                    font-size: 28px;
-                                    font-weight: 700;
-                                    margin-bottom: 5px;
-                                    background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-                                    -webkit-background-clip: text;
-                                    -webkit-text-fill-color: transparent;
-                                }
-                                
-                                .region-badge {
-                                    display: inline-block;
-                                    padding: 5px 15px;
-                                    background: linear-gradient(90deg, #2d6cdf, #3a86ff);
-                                    color: white;
-                                    border-radius: 20px;
-                                    font-size: 14px;
-                                    font-weight: 600;
-                                    margin-top: 5px;
+                                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                                 }
                                 
                                 .card {
-                                    background: #1b263b;
+                                    background: rgba(30, 41, 59, 0.8);
                                     padding: 20px;
                                     margin-bottom: 20px;
-                                    border-radius: 15px;
-                                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                                    border: 1px solid #2c405c;
+                                    border-radius: 10px;
+                                    border: 1px solid rgba(59, 130, 246, 0.1);
+                                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                                 }
                                 
-                                .card-title {
-                                    font-size: 20px;
-                                    font-weight: 600;
-                                    margin-bottom: 15px;
-                                    color: #e0e1dd;
+                                .card:last-child {
+                                    margin-bottom: 0;
+                                }
+                                
+                                img {
+                                    max-width: 100%;
+                                    border-radius: 8px;
+                                    margin: 15px auto;
+                                    display: block;
+                                    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                                }
+                                
+                                h1 {
+                                    margin: 0 0 5px;
+                                    text-align: center;
+                                    color: #f8fafc;
+                                    font-size: 24px;
+                                    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                                }
+                                
+                                h2 {
+                                    font-size: 18px;
+                                    margin: 0 0 20px;
+                                    text-align: center;
+                                    color: #60a5fa;
                                     position: relative;
-                                    padding-bottom: 10px;
                                 }
                                 
-                                .card-title::after {
+                                h2:after {
                                     content: '';
                                     position: absolute;
-                                    bottom: 0;
-                                    left: 0;
+                                    bottom: -8px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
                                     width: 40px;
                                     height: 3px;
-                                    background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-                                    border-radius: 10px;
+                                    background: #3b82f6;
+                                    border-radius: 3px;
                                 }
                                 
-                                .stat-grid {
-                                    display: grid;
-                                    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                                    gap: 15px;
+                                p {
+                                    margin: 10px 0;
+                                    padding: 8px 0;
+                                    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+                                    color: #e2e8f0;
                                 }
                                 
-                                .stat-item {
-                                    background: #152238;
-                                    padding: 15px;
-                                    border-radius: 10px;
-                                    text-align: center;
-                                    border: 1px solid #2c405c;
+                                p:last-child {
+                                    border-bottom: none;
                                 }
                                 
-                                .stat-value {
-                                    font-size: 18px;
-                                    font-weight: 600;
-                                    color: #4cc9f0;
-                                }
-                                
-                                .stat-label {
-                                    font-size: 13px;
-                                    color: #8a8d98;
-                                    margin-top: 5px;
-                                }
-                                
-                                .info-item {
-                                    display: flex;
-                                    margin-bottom: 12px;
-                                    align-items: center;
-                                }
-                                
-                                .info-icon {
-                                    margin-right: 10px;
-                                    font-size: 18px;
-                                    color: #3a86ff;
-                                    width: 24px;
-                                    text-align: center;
-                                }
-                                
-                                .info-text {
-                                    flex: 1;
-                                }
-                                
-                                .bio-text {
-                                    font-style: italic;
-                                    color: #a3aebf;
-                                    margin: 15px 0;
-                                    padding: 10px;
-                                    background: #152238;
-                                    border-radius: 10px;
-                                    position: relative;
-                                    border: 1px solid #2c405c;
-                                }
-                                
-                                .bio-text::before {
-                                    content: """;
-                                    font-size: 30px;
-                                    color: #395985;
-                                    position: absolute;
-                                    left: 5px;
-                                    top: -5px;
-                                }
-                                
-                                .bio-text::after {
-                                    content: """;
-                                    font-size: 30px;
-                                    color: #395985;
-                                    position: absolute;
-                                    right: 5px;
-                                    bottom: -20px;
-                                }
-                                
-                                .equip-items {
-                                    display: flex;
-                                    flex-wrap: wrap;
-                                    gap: 15px;
-                                    justify-content: center;
-                                }
-                                
-                                .equip-item {
-                                    text-align: center;
-                                    width: calc(50% - 15px);
-                                    background: #152238;
-                                    padding: 15px;
-                                    border-radius: 10px;
-                                    border: 1px solid #2c405c;
-                                }
-                                
-                                .equip-item img {
-                                    max-width: 100%;
-                                    border-radius: 10px;
-                                    margin-top: 10px;
-                                    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-                                }
-                                
-                                .footer {
-                                    text-align: center;
-                                    margin-top: 30px;
-                                    font-size: 14px;
-                                    color: #8a8d98;
-                                }
-                                
-                                .back-button {
-                                    display: inline-block;
-                                    padding: 10px 20px;
-                                    background: linear-gradient(90deg, #2d6cdf, #3a86ff);
-                                    color: white;
-                                    border: none;
-                                    border-radius: 8px;
-                                    font-size: 14px;
-                                    font-weight: 500;
-                                    cursor: pointer;
-                                    transition: all 0.2s;
-                                    text-decoration: none;
-                                    margin-top: 15px;
-                                }
-                                
-                                .back-button:hover {
-                                    background: linear-gradient(90deg, #3a86ff, #4cc9f0);
-                                    box-shadow: 0 5px 10px rgba(58, 134, 255, 0.3);
-                                }
-                                
-                                .back-icon {
-                                    margin-right: 5px;
-                                }
-                                
-                                .action-buttons {
-                                    display: flex;
-                                    justify-content: center;
+                                .item-wrapper {
                                     margin-top: 20px;
-                                }
-                                
-                                @media (max-width: 600px) {
-                                    .stat-grid {
-                                        grid-template-columns: repeat(2, 1fr);
-                                    }
-                                    
-                                    .equip-item {
-                                        width: 100%;
-                                    }
+                                    padding-top: 15px;
+                                    border-top: 1px solid rgba(148, 163, 184, 0.2);
                                 }
                             </style>
                         </head>
                         <body>
                             <div class="container">
-                                <div class="profile-header">
-                                    <img class="profile-image" src="${data.result.image}" alt="Profile Image">
-                                    <h1 class="username">${data.result.account.name}</h1>
-                                    <span class="region-badge">Region: ${data.result.account.region}</span>
-                                </div>
-                                
+                                <img class="profile-image" src="${data.result.image}" alt="Profile Image">
+                                <h1>${data.result.account.name}</h1>
+
                                 <div class="card">
-                                    <h2 class="card-title">Statistik Akun</h2>
-                                    <div class="stat-grid">
-                                        <div class="stat-item">
-                                            <div class="stat-value">${data.result.account.level}</div>
-                                            <div class="stat-label">Level</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">${data.result.account.xp}</div>
-                                            <div class="stat-label">XP</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">${data.result.account.like}</div>
-                                            <div class="stat-label">Like</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="bio-text">
-                                        ${data.result.account.bio || "Tidak ada bio"}
-                                    </div>
-                                    
-                                    <div class="info-item">
-                                        <div class="info-icon">📅</div>
-                                        <div class="info-text">Akun dibuat: ${data.result.account.create_time}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <div class="info-icon">⏳</div>
-                                        <div class="info-text">Login terakhir: ${data.result.account.last_login}</div>
-                                    </div>
+                                    <h2>Detail Akun</h2>
+                                    <p>🔥 Level: ${data.result.account.level}</p>
+                                    <p>💎 XP: ${data.result.account.xp}</p>
+                                    <p>🌍 Region: ${data.result.account.region}</p>
+                                    <p>❤️ Like: ${data.result.account.like}</p>
+                                    <p>📝 Bio: ${data.result.account.bio}</p>
+                                    <p>📅 Dibuat: ${data.result.account.create_time}</p>
+                                    <p>⏳ Login Terakhir: ${data.result.account.last_login}</p>
                                 </div>
-                                
+
                                 <div class="card">
-                                    <h2 class="card-title">Guild</h2>
-                                    <div class="info-item">
-                                        <div class="info-icon">🏆</div>
-                                        <div class="info-text">Nama Guild: ${data.result.guild.name || "Tidak ada guild"}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <div class="info-icon">👥</div>
-                                        <div class="info-text">Anggota: ${data.result.guild.member}/${data.result.guild.capacity}</div>
-                                    </div>
+                                    <h2>Guild</h2>
+                                    <p>🏆 Nama: ${data.result.guild.name}</p>
+                                    <p>👥 Anggota: ${data.result.guild.member}/${data.result.guild.capacity}</p>
                                 </div>
-                                
+
                                 <div class="card">
-                                    <h2 class="card-title">Equipment</h2>
-                                    <div class="equip-items">
-                                        ${data.result.equippedItems.Outfit.map(item => `
-                                            <div class="equip-item">
-                                                <div>${item.name}</div>
-                                                <img src="${item.image}" alt="${item.name}">
-                                            </div>
-                                        `).join('')}
-                                    </div>
+                                    <h2>Equip</h2>
+                                    ${data.result.equippedItems.Outfit.map(item => `
+                                        <div class="item-wrapper">
+                                            <p>${item.name}</p>
+                                            <img src="${item.image}" alt="${item.name}">
+                                        </div>
+                                    `).join('')}
                                 </div>
-                                
-                                <div class="action-buttons">
-                                    <button class="back-button" onclick="window.close()"><span class="back-icon">↩</span> Kembali</button>
-                                </div>
-                            </div>
-                            
-                            <div class="footer">
-                                © 2025 FF Checker - Data diambil menggunakan API Free Fire
                             </div>
                         </body>
                         </html>
@@ -561,15 +315,39 @@
                     resultPage.document.write(htmlContent);
                     resultPage.document.close();
                 } else {
-                    alert('❌ Akun tidak ditemukan! Cek kembali ID yang kamu masukkan.');
+                    alert('❌ Akun tidak ditemukan!');
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Terjadi kesalahan saat memproses permintaan! Silakan coba lagi nanti.');
+                console.error(error);
+                alert('❌ Terjadi kesalahan!');
             }
 
             document.getElementById('loadingText').style.display = 'none';
         });
+
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 70, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                move: { enable: true, speed: 1, direction: "none", out_mode: "out" },
+                line_linked: { enable: true, distance: 150, color: "#60a5fa", opacity: 0.2, width: 1 }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                    push: { particles_nb: 3 }
+                }
+            }
+        });
     </script>
 </body>
-</html>
+    </html>
