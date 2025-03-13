@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>XSTBot Whatsapp</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlPSIjNDMzOENBIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTEzIDEwVjNMNCAxNGg3djdsOS0xMWgtN3oiIC8+PC9zdmc+" />
+      <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+         
+         body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+         }
+         
+         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+         }
+         
+         .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            background-color: #1e293b;
+         }
+         
+         .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+         }
+         
+         .form-control {
+            transition: all 0.2s ease;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: #e2e8f0;
+         }
+         
+         .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+         }
+         
+         .btn {
+            transition: all 0.3s ease;
+         }
+         
+         .btn:hover {
+            transform: translateY(-2px);
+         }
+         
+         .table-container {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+         }
+         
+         .elegant-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e293b;
+         }
+         
+         .elegant-table th, 
+         .elegant-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+         }
+         
+         .elegant-table th {
+            background-color: #1e40af;
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+         }
+         
+         .elegant-table tbody tr:nth-child(even) {
+            background-color: #1e293b;
+         }
+         
+         .elegant-table tbody tr:nth-child(odd) {
+            background-color: #283548;
+         }
+         
+         .elegant-table tbody tr:hover {
+            background-color: #334155;
+         }
+         
+         .result-card {
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+         }
+         
+         @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+         }
+
+         .banner-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+         }
+
+         .banner-img {
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9);
+         }
+         
+         /* Styling for the marquee text */
+         .marquee-container {
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+         }
+         
+         .marquee-text {
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+         }
+         
+         @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+         }
+         
+         /* Sidebar Styles */
+         .sidebar {
+            position: fixed;
+            height: 100%;
+            width: 250px;
+            top: 0;
+            right: -250px;
+            background-color: #1e293b;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+         }
+         
+         .sidebar.active {
+            right: 0;
+         }
+         
+         .close-btn {
+            text-align: right;
+            margin-bottom: 15px;
+         }
+         
+         .close-btn i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #94a3b8;
+         }
+         
+         .sidebar h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #60a5fa;
+         }
+         
+         .sidebar p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+         }
+         
+         .sidebar .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+         }
+         
+         .sidebar .links a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.2s ease;
+         }
+         
+         .sidebar .links a:hover {
+            background-color: #334155;
+         }
+         
+         .sidebar .links a i {
+            color: #60a5fa;
+            width: 20px;
+         }
+         
+         /* Hamburger button for sidebar */
+         .hamburger-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+         }
+         
+         .hamburger-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+         }
+         
+         .hamburger-button span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            border-radius: 1px;
+         }
+         
+         /* Overlay when sidebar is open */
+         .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+         }
+         
+         .overlay.active {
+            opacity: 1;
+            visibility: visible;
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Hamburger Button for Sidebar -->
+      <div class="hamburger-button" id="hamburgerButton">
+         <span></span>
+         <span></span>
+         <span></span>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+         <div class="close-btn">
+            <i class="fas fa-times" onclick="toggleSidebar()"></i>
+         </div>
+         <h2>XSTBot Store</h2>
+         <p>Free Api Stalk Game</p>
+         <div class="links">
+            <a href="/ff-region"><i class="fas fa-link"></i>Cek FF Region</a>
+            <a href="https://lynk.id/xstbot-store"><i class="fas fa-link"></i>Shop Scraping</a>
+            <a href="/dokumentasi"><i class="fas fa-link"></i>Dokumentasi</a>
+            <a href="/endpoint"><i class="fas fa-link"></i>List Game</a>
+            <a href="/donasi"><i class="fas fa-link"></i>Donasi</a>
+            <a href="/sewa"><i class="fas fa-link"></i>sewa</a>
+         </div>
+      </div>
+      
+      <!-- Overlay -->
+      <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+      <div class="w-full min-h-screen flex justify-center py-8 bg-gradient-to-br from-slate-900 to-blue-900">
+         <div class="container md:w-2/3 lg:w-1/2 w-full flex flex-col gap-6 px-4">
+            <!-- Banner Image -->
+            <div class="banner-container">
+               <img src="https://files.catbox.moe/2qnbf4.jpg" alt="Game ID Checker Banner" class="banner-img">
+            </div>
+            
+            <!-- Marquee Text Below Banner -->
+            <div class="marquee-container">
+               <div class="marquee-text">
+                  🔥 OPEN ORDER Scraping stalk username untuk bot WhatsApp...! 🎮
+               </div>
+            </div>
+            
+            <!-- Header -->
+            <div class="w-full flex items-center justify-center card p-4">
+               <div class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-300 to-blue-500 bg-clip-text text-transparent">Game ID Checker</h1>
+               </div>
+            </div>
+            
+            <!-- Form Card -->
+            <div class="card p-6 rounded-xl">
+               <h2 class="text-lg font-semibold text-blue-300 mb-4">Game Information</h2>
+               <form action="" class="flex flex-col gap-4">
+                  <div class="form-group">
+                     <label for="game" class="block text-sm font-medium text-gray-300 mb-1">Nama Game</label>
+                     <select
+                        name="game"
+                        id="game"
+                        class="form-control w-full p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                        placeholder="Pilih Game"
+                     ></select>
+                  </div>
+                  
+                  <div class="form-group">
+                     <label for="id" class="block text-sm font-medium text-gray-300 mb-1">ID Game</label>
+                     <input
+                        type="text"
+                        name="id"
+                        id="id"
+                        class="form-control w-full p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                        placeholder="Masukkan ID Game"
+                     />
+                  </div>
+
+                  <div class="form-group" id="zone-form"></div>
+
+                  <button type="submit" class="btn mt-3 py-2.5 px-4 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-medium shadow-md hover:shadow-lg active:scale-98 transition-all duration-200">
+                     <div class="flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>Periksa ID</span>
+                     </div>
+                  </button>
+               </form>
+            </div>
+            
+            <!-- Result Card -->
+            <div class="card result-card p-5 rounded-xl shadow hidden" id="result"></div>
+            
+
+            <!-- Footer -->
+            <div class="w-full text-center text-sm text-gray-400 pb-4">
+                &copy; 2025 Game ID Checker | All Rights Reserved
+            </div>
+         </div>
+      </div>
+      
+      <script>
+         // Sidebar toggle functionality
+         const hamburgerButton = document.getElementById('hamburgerButton');
+         const sidebar = document.getElementById('sidebar');
+         const overlay = document.getElementById('overlay');
+         
+         function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+         }
+         
+         hamburgerButton.addEventListener('click', toggleSidebar);
+      
+         document.querySelector('#result').classList.add('hidden');
+
+         const game = document.querySelector('#game');
+         (async () => {
+            const res = await fetch('/endpoint');
+            try {
+               const data = await res.json();
+               data.data.forEach((item) => {
+                  const option = document.createElement('option');
+                  option.value = item.endpoint;
+                  option.textContent = item.name;
+                  option.setAttribute('data-isZone', item.hasZoneId);
+                  option.setAttribute('data-listZone', item.listZoneId);
+
+                  game.appendChild(option);
+               });
+            } catch (error) {
+               console.log(error);
+            }
+         })();
+
+         const gameOption = document.querySelectorAll('#game');
+         game.addEventListener('change', (e) => {
+            const option = e.target.options[e.target.selectedIndex];
+            const isZone = option.getAttribute('data-isZone');
+            const listZone = option.getAttribute('data-listZone');
+            const zoneForm = document.querySelector('#zone-form');
+
+            if (isZone == 'true' && listZone == 'null') {
+               const zoneLabel = document.createElement('label');
+               zoneLabel.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700', 'mb-1');
+               zoneForm.innerHTML = `<input
+                     type="text"
+                     name="zone"
+                     id="zone"
+                     class="form-control w-full p-2.5 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm text-gray-700"
+                     placeholder="Masukkan Zone ID"
+                  />`;
+               zoneForm.prepend(zoneLabel);
+               zoneLabel.textContent = 'Zone ID';
+            } else if (isZone == 'true' && listZone != 'null') {
+               const getListZone = async () => {
+                  zoneForm.innerHTML = '';
+                  const zone = document.createElement('select');
+                  zone.classList.add('form-control', 'w-full', 'p-2.5', 'rounded-lg', 'bg-white', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-500', 'shadow-sm', 'text-gray-700');
+                  zone.setAttribute('id', 'zone');
+                  const zoneLabel = document.createElement('label');
+                  zoneLabel.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700', 'mb-1');
+                  const listZoneId = await fetch(`${option.getAttribute('data-listZone')}`);
+
+                  try {
+                     const listZoneIdJson = await listZoneId.json();
+
+                     listZoneIdJson.data?.forEach((item) => {
+                        const option = document.createElement('option');
+                        option.value = item.zoneId;
+                        option.textContent = item.name;
+
+                        zone.appendChild(option);
+                     });
+                     zoneForm.appendChild(zone);
+                     zoneForm.prepend(zoneLabel);
+                     zoneLabel.textContent = 'Zone ID';
+                  } catch (error) {
+                     console.log(error.message);
+                  }
+               };
+
+               getListZone();
+            } else {
+               zoneForm.innerHTML = '';
+            }
+         });
+
+         const form = document.querySelector('form');
+         const id = document.querySelector('#id');
+         const zone = document.querySelector('#zone');
+
+         form.addEventListener('submit', (e) => {
+            document.querySelector('#result').classList.add('hidden');
+            const button = document.querySelector('button');
+            button.innerHTML = '<div class="flex items-center justify-center gap-2"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>Processing...</span></div>';
+            button.classList.add('opacity-70', 'cursor-not-allowed');
+            button.setAttribute('disabled', 'disabled');
+
+            e.preventDefault();
+
+            if (e.target.id.value === '' || e.target.game.value === '' || e.target?.zone?.value === '') {
+               // Elegant error notification
+               const errorDiv = document.createElement('div');
+               errorDiv.classList.add('bg-red-50', 'border', 'border-red-200', 'text-red-700', 'px-4', 'py-3', 'rounded-lg', 'mb-4');
+               errorDiv.innerHTML = '<div class="flex items-center"><svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg><span>ID Game dan Zone ID tidak boleh kosong</span></div>';
+               
+               form.prepend(errorDiv);
+               setTimeout(() => {
+                  errorDiv.remove();
+                  button.innerHTML = '<div class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg><span>Periksa ID</span></div>';
+                  button.classList.remove('opacity-70', 'cursor-not-allowed');
+                  button.removeAttribute('disabled');
+               }, 3000);
+            } else {
+               (async () => {
+                  const res = await fetch(
+                     `${e.target.game.value}?id=${encodeURIComponent(e.target.id.value)}&zone=${
+                        e.target?.zone?.value || ''
+                     }`
+                  );
+                  try {
+                     const data = await res.json();
+                     if (data.status) {
+                        let resHtml = `
+                        <div class="flex items-center justify-between mb-3">
+                           <h3 class="text-lg font-semibold text-gray-800">Hasil Pencarian</h3>
+                           <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">Found</span>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                           <div class="grid md:grid-cols-3 gap-4">
+                              <div class="flex flex-col">
+                                 <span class="text-xs text-gray-500">Username</span>
+                                 <span class="text-sm font-medium text-gray-800">${data.data?.username}</span>
+                              </div>
+                              <div class="flex flex-col">
+                                 <span class="text-xs text-gray-500">ID</span>
+                                 <span class="text-sm font-medium text-gray-800">${data.data?.user_id}</span>
+                              </div>
+                              <div class="flex flex-col">
+                                 <span class="text-xs text-gray-500">Zone</span>
+                                 <span class="text-sm font-medium text-gray-800">${data.data?.zone_id || 'N/A'}</span>
+                              </div>
+                           </div>
+                        </div>`;
+                        document.querySelector('#result').innerHTML = resHtml;
+                        document.querySelector('#result').classList.remove('hidden');
+                     } else {
+                        let resHtml = `
+                        <div class="flex items-center justify-between mb-3">
+                           <h3 class="text-lg font-semibold text-gray-800">Hasil Pencarian</h3>
+                           <span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full">Not Found</span>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                           <p class="text-sm text-gray-700">${data.message}</p>
+                        </div>`;
+                        document.querySelector('#result').innerHTML = resHtml;
+                        document.querySelector('#result').classList.remove('hidden');
+                     }
+                  } catch (error) {
+                     console.log(error);
+                     let resHtml = `
+                     <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-semibold text-gray-800">Error</h3>
+                        <span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full">Failed</span>
+                     </div>
+                     <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-700">Terjadi kesalahan saat memproses permintaan.</p>
+                     </div>`;
+                     document.querySelector('#result').innerHTML = resHtml;
+                     document.querySelector('#result').classList.remove('hidden');
+                  }
+                  button.innerHTML = '<div class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg><span>Periksa ID</span></div>';
+                  button.classList.remove('opacity-70', 'cursor-not-allowed');
+                  button.removeAttribute('disabled');
+               })();
+            }
+         });
+         
+         // Script untuk animasi teks berjalan alternatif jika marquee tidak didukung
+         document.addEventListener('DOMContentLoaded', function() {
+            const marqueeText = document.querySelector('.marquee-text');
+            if (!CSS.supports('animation', 'marquee 20s linear infinite')) {
+               function setupMarquee() {
+                  const textWidth = marqueeText.offsetWidth;
+                  const containerWidth = marqueeText.parentElement.offsetWidth;
+                  const startPosition = containerWidth;
+                  const duration = 20 * (textWidth / 300); // Sesuaikan kecepatan
+                  
+                  marqueeText.style.transform = `translateX(${startPosition}px)`;
+                  
+                  let start = null;
+                  function step(timestamp) {
+                     if (!start) start = timestamp;
+                     const progress = timestamp - start;
+                     const position = startPosition - (progress / duration * (textWidth + containerWidth));
+                     
+                     marqueeText.style.transform = `translateX(${position}px)`;
+                     
+                     if (position < -textWidth) {
+                        start = timestamp;
+                     }
+                     
+                     window.requestAnimationFrame(step);
+                  }
+                  
+                  window.requestAnimationFrame(step);
+               }
+               
+               setupMarquee();
+               window.addEventListener('resize', setupMarquee);
+            }
+         });
+      </script>
+   </body>
+              </html>
