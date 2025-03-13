@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Region Free Fire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #e0e1dd;
+        }
+        
+        .container {
+            background: rgba(21, 34, 56, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid #2c405c;
+        }
+        
+        h1 {
+            color: #e0e1dd;
+            margin-bottom: 25px;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+            border-radius: 10px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #2c405c;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+            outline: none;
+            background-color: #1b263b;
+            color: #e0e1dd;
+        }
+        
+        input:focus {
+            border-color: #3a86ff;
+            box-shadow: 0 0 10px rgba(58, 134, 255, 0.3);
+        }
+        
+        input::placeholder {
+            color: #8a8d98;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #3a86ff;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #8a8d98;
+        }
+        
+        .credit {
+            font-size: 13px;
+            margin-top: 10px;
+            color: #6c7483;
+        }
+        
+        /* Result Page Styles */
+        .result-container {
+            background: #1b263b;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-direction: column;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: #152238;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #2c405c;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #4cc9f0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #8a8d98;
+        }
+        
+        /* Back button styles */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #2d6cdf, #3a86ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+            box-shadow: 0 5px 10px rgba(58, 134, 255, 0.3);
+        }
+        
+        .back-icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cek Region Free Fire</h1>
+        <input type="text" id="ffid" placeholder="Masukkan ID Free Fire">
+        <button id="checkBtn">Cek Akun</button>
+        <p class="loading" id="loadingText">🔍 Sedang mencari...</p>
+        
+        <div class="footer">
+            Cek informasi akun Free Fire dengan mudah dan cepat
+        </div>
+        <div class="credit">
+            © 2025 FF Checker - Semua data hanya untuk keperluan informasi
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('checkBtn').addEventListener('click', async () => {
+            const ffid = document.getElementById('ffid').value;
+            if (!ffid) {
+                alert('Masukkan ID Free Fire dulu ya!');
+                return;
+            }
+
+            document.getElementById('loadingText').style.display = 'block';
+
+            try {
+                const response = await fetch('/ffstalk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: ffid })
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 200) {
+                    const resultPage = window.open('', '_blank');
+
+                    let htmlContent = `
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Detail Akun Free Fire - ${data.result.account.name}</title>
+                            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+                            <style>
+                                * {
+                                    margin: 0;
+                                    padding: 0;
+                                    box-sizing: border-box;
+                                    font-family: 'Poppins', sans-serif;
+                                }
+                                
+                                body {
+                                    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+                                    color: #e0e1dd;
+                                    padding: 20px;
+                                    min-height: 100vh;
+                                }
+                                
+                                .container {
+                                    background: rgba(21, 34, 56, 0.95);
+                                    padding: 30px;
+                                    border-radius: 20px;
+                                    max-width: 700px;
+                                    margin: auto;
+                                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                                    border: 1px solid #2c405c;
+                                }
+                                
+                                .profile-header {
+                                    text-align: center;
+                                    margin-bottom: 30px;
+                                    position: relative;
+                                }
+                                
+                                .profile-image {
+                                    width: 150px;
+                                    height: 150px;
+                                    border-radius: 50%;
+                                    object-fit: cover;
+                                    border: 5px solid #3a86ff;
+                                    margin: 0 auto 15px;
+                                    display: block;
+                                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                                }
+                                
+                                .username {
+                                    font-size: 28px;
+                                    font-weight: 700;
+                                    margin-bottom: 5px;
+                                    background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                }
+                                
+                                .region-badge {
+                                    display: inline-block;
+                                    padding: 5px 15px;
+                                    background: linear-gradient(90deg, #2d6cdf, #3a86ff);
+                                    color: white;
+                                    border-radius: 20px;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    margin-top: 5px;
+                                }
+                                
+                                .card {
+                                    background: #1b263b;
+                                    padding: 20px;
+                                    margin-bottom: 20px;
+                                    border-radius: 15px;
+                                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                                    border: 1px solid #2c405c;
+                                }
+                                
+                                .card-title {
+                                    font-size: 20px;
+                                    font-weight: 600;
+                                    margin-bottom: 15px;
+                                    color: #e0e1dd;
+                                    position: relative;
+                                    padding-bottom: 10px;
+                                }
+                                
+                                .card-title::after {
+                                    content: '';
+                                    position: absolute;
+                                    bottom: 0;
+                                    left: 0;
+                                    width: 40px;
+                                    height: 3px;
+                                    background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+                                    border-radius: 10px;
+                                }
+                                
+                                .stat-grid {
+                                    display: grid;
+                                    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                                    gap: 15px;
+                                }
+                                
+                                .stat-item {
+                                    background: #152238;
+                                    padding: 15px;
+                                    border-radius: 10px;
+                                    text-align: center;
+                                    border: 1px solid #2c405c;
+                                }
+                                
+                                .stat-value {
+                                    font-size: 18px;
+                                    font-weight: 600;
+                                    color: #4cc9f0;
+                                }
+                                
+                                .stat-label {
+                                    font-size: 13px;
+                                    color: #8a8d98;
+                                    margin-top: 5px;
+                                }
+                                
+                                .info-item {
+                                    display: flex;
+                                    margin-bottom: 12px;
+                                    align-items: center;
+                                }
+                                
+                                .info-icon {
+                                    margin-right: 10px;
+                                    font-size: 18px;
+                                    color: #3a86ff;
+                                    width: 24px;
+                                    text-align: center;
+                                }
+                                
+                                .info-text {
+                                    flex: 1;
+                                }
+                                
+                                .bio-text {
+                                    font-style: italic;
+                                    color: #a3aebf;
+                                    margin: 15px 0;
+                                    padding: 10px;
+                                    background: #152238;
+                                    border-radius: 10px;
+                                    position: relative;
+                                    border: 1px solid #2c405c;
+                                }
+                                
+                                .bio-text::before {
+                                    content: """;
+                                    font-size: 30px;
+                                    color: #395985;
+                                    position: absolute;
+                                    left: 5px;
+                                    top: -5px;
+                                }
+                                
+                                .bio-text::after {
+                                    content: """;
+                                    font-size: 30px;
+                                    color: #395985;
+                                    position: absolute;
+                                    right: 5px;
+                                    bottom: -20px;
+                                }
+                                
+                                .equip-items {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 15px;
+                                    justify-content: center;
+                                }
+                                
+                                .equip-item {
+                                    text-align: center;
+                                    width: calc(50% - 15px);
+                                    background: #152238;
+                                    padding: 15px;
+                                    border-radius: 10px;
+                                    border: 1px solid #2c405c;
+                                }
+                                
+                                .equip-item img {
+                                    max-width: 100%;
+                                    border-radius: 10px;
+                                    margin-top: 10px;
+                                    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+                                }
+                                
+                                .footer {
+                                    text-align: center;
+                                    margin-top: 30px;
+                                    font-size: 14px;
+                                    color: #8a8d98;
+                                }
+                                
+                                .back-button {
+                                    display: inline-block;
+                                    padding: 10px 20px;
+                                    background: linear-gradient(90deg, #2d6cdf, #3a86ff);
+                                    color: white;
+                                    border: none;
+                                    border-radius: 8px;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    cursor: pointer;
+                                    transition: all 0.2s;
+                                    text-decoration: none;
+                                    margin-top: 15px;
+                                }
+                                
+                                .back-button:hover {
+                                    background: linear-gradient(90deg, #3a86ff, #4cc9f0);
+                                    box-shadow: 0 5px 10px rgba(58, 134, 255, 0.3);
+                                }
+                                
+                                .back-icon {
+                                    margin-right: 5px;
+                                }
+                                
+                                .action-buttons {
+                                    display: flex;
+                                    justify-content: center;
+                                    margin-top: 20px;
+                                }
+                                
+                                @media (max-width: 600px) {
+                                    .stat-grid {
+                                        grid-template-columns: repeat(2, 1fr);
+                                    }
+                                    
+                                    .equip-item {
+                                        width: 100%;
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="profile-header">
+                                    <img class="profile-image" src="${data.result.image}" alt="Profile Image">
+                                    <h1 class="username">${data.result.account.name}</h1>
+                                    <span class="region-badge">Region: ${data.result.account.region}</span>
+                                </div>
+                                
+                                <div class="card">
+                                    <h2 class="card-title">Statistik Akun</h2>
+                                    <div class="stat-grid">
+                                        <div class="stat-item">
+                                            <div class="stat-value">${data.result.account.level}</div>
+                                            <div class="stat-label">Level</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-value">${data.result.account.xp}</div>
+                                            <div class="stat-label">XP</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-value">${data.result.account.like}</div>
+                                            <div class="stat-label">Like</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bio-text">
+                                        ${data.result.account.bio || "Tidak ada bio"}
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <div class="info-icon">📅</div>
+                                        <div class="info-text">Akun dibuat: ${data.result.account.create_time}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-icon">⏳</div>
+                                        <div class="info-text">Login terakhir: ${data.result.account.last_login}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <h2 class="card-title">Guild</h2>
+                                    <div class="info-item">
+                                        <div class="info-icon">🏆</div>
+                                        <div class="info-text">Nama Guild: ${data.result.guild.name || "Tidak ada guild"}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-icon">👥</div>
+                                        <div class="info-text">Anggota: ${data.result.guild.member}/${data.result.guild.capacity}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <h2 class="card-title">Equipment</h2>
+                                    <div class="equip-items">
+                                        ${data.result.equippedItems.Outfit.map(item => `
+                                            <div class="equip-item">
+                                                <div>${item.name}</div>
+                                                <img src="${item.image}" alt="${item.name}">
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="action-buttons">
+                                    <button class="back-button" onclick="window.close()"><span class="back-icon">↩</span> Kembali</button>
+                                </div>
+                            </div>
+                            
+                            <div class="footer">
+                                © 2025 FF Checker - Data diambil menggunakan API Free Fire
+                            </div>
+                        </body>
+                        </html>
+                    `;
+
+                    resultPage.document.write(htmlContent);
+                    resultPage.document.close();
+                } else {
+                    alert('❌ Akun tidak ditemukan! Cek kembali ID yang kamu masukkan.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Terjadi kesalahan saat memproses permintaan! Silakan coba lagi nanti.');
+            }
+
+            document.getElementById('loadingText').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
